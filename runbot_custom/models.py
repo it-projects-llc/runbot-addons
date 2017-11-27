@@ -797,7 +797,7 @@ def exp_rename_origin(''' % (build.dest, build.dest))
         base_domain = self.pool.get('ir.config_parameter').get_param(cr, uid, 'runbot.domain', fqdn())
         for build in self.browse(cr, uid, ids, context=context):
             cmd, mods = build.cmd()
-            server_path = cmd[1]
+            server_path = cmd[0]
             cmd = [build.path('saas.py'),
                '--odoo-script=%s' % server_path,
                '--odoo-xmlrpc-port=%s' % build.port,
