@@ -798,7 +798,7 @@ def exp_rename_origin(''' % (build.dest, build.dest))
         for build in self.browse(cr, uid, ids, context=context):
             cmd, mods = build.cmd()
             server_path = cmd[1]
-            cmd = ['python', build.path('saas.py'),
+            cmd = [build.path('saas.py'),
                '--odoo-script=%s' % server_path,
                '--odoo-xmlrpc-port=%s' % build.port,
                '--odoo-longpolling-port=%s' % (build.port + 1),
