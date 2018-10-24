@@ -283,7 +283,7 @@ class runbot_build(orm.Model):
             return MAGIC_PID_RUN_NEXT_JOB
 
         # PR branch name, e.g. 	8.0-mail_private
-        head = branch.pull_head_name
+        head = branch.pull_head_name or ''
         # Target branch name, e.g. 8.0
         base = pi['base']['ref']
 
