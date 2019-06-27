@@ -177,6 +177,11 @@ class runbot_repo(orm.Model):
                 branch_id = Branch.create(cr, uid, {'repo_id': repo.id, 'name': name})
                 i += 1
 
+            if i == 10:
+                _logger.debug('Force commit new branches')
+                i = 0
+                cr.commit()
+
             branch = Branch.browse(cr, uid, [branch_id], context=context)[0]
             # skip build for old branches
             if dateutil.parser.parse(date[:19]) + datetime.timedelta(30) < datetime.datetime.now():
@@ -205,10 +210,6 @@ class runbot_repo(orm.Model):
                         # new order keeps lowest skipped sequence
                         build_info['sequence'] = skipped_build_sequences[0]['sequence']
                 Build.create(cr, uid, build_info)
-            if i == 10:
-                _logger.debug('Force commit new branches')
-                i = 0
-                cr.commit()
 
         # skip old builds (if their sequence number is too low, they will not ever be built)
         skippable_domain = [('repo_id', '=', repo.id), ('state', '=', 'pending')]
